@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Student Pocket Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="bar">
+  <div class="brand"><div class="logo">৳</div>Student Pocket Manager</div>
+  <nav id="nav"><a href="#dashboard">Dashboard</a><a href="#transactions">Transactions</a><a href="#notes">Notes</a></nav>
+  <button class="ib" id="theme" aria-label="Toggle theme" title="Toggle theme">◐</button>
+</div></header>
+
+<main>
+<!-- DASHBOARD -->
+<section class="view" id="v-dashboard">
+  <h1>Your money, at a glance</h1>
+  <p class="sub" id="monthLabel"></p>
+  <div class="grid g4" style="margin-bottom:16px">
+    <div class="card hero"><div class="lab">Net balance</div><div class="num" id="sBal">৳0</div></div>
+    <div class="card"><div class="lab">Total income</div><div class="num inc" id="sInc">৳0</div></div>
+    <div class="card"><div class="lab">Total expense</div><div class="num exp" id="sExp">৳0</div></div>
+    <div class="card"><div class="lab">Savings rate</div><div class="num" id="sRate">0%</div></div>
+  </div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card">
+      <h3>Monthly budget <button class="btn g s" id="setBudget">Set budget</button></h3>
+      <div class="row" style="justify-content:space-between;margin-bottom:8px"><span id="bTxt" class="lab"></span><b id="bPct"></b></div>
+      <div class="prog"><i id="bBar" style="width:0"></i></div>
+      <p class="lab" id="bHint" style="margin:10px 0 0"></p>
+    </div>
+    <div class="card">
+      <h3>Savings goal <button class="btn g s" id="setGoal">Set goal</button></h3>
+      <div class="row" style="justify-content:space-between;margin-bottom:8px"><span id="gTxt" class="lab"></span><b id="gPct"></b></div>
+      <div class="prog"><i id="gBar" style="width:0;background:var(--brand2)"></i></div>
+      <p class="lab" id="gHint" style="margin:10px 0 0"></p>
+    </div>
+  </div>
+  <div class="grid g2">
+    <div class="card"><h3>Last 6 months</h3><div class="bars" id="bars"></div>
+      <div class="leg"><span style="--c:var(--inc)">Income</span><span style="--c:var(--exp)">Expense</span></div></div>
+    <div class="card"><h3>Spending by category <span class="lab">This month</span></h3><div id="cats"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Recent activity <a href="#transactions" class="lab">View all</a></h3><div class="tw"><table><tbody id="recent"></tbody></table></div></div>
+</section>
+
+<!-- TRANSACTIONS -->
+<section class="view" id="v-transactions">
+  <h1>Transactions</h1><p class="sub">Add, edit, search and export every entry.</p>
+  <div class="card" style="margin-bottom:16px">
+    <h3 id="formTitle">Add transaction</h3>
+    <form class="f" id="form">
+      <div><label for="type">Type</label><select id="type"><option>Income</option><option>Expense</option></select></div>
+      <div><label for="category">Category</label><select id="category"></select></div>
+      <div><label for="amount">Amount (৳)</label><input id="amount" type="number" min="1" step="any" placeholder="0" required></div>
+      <div><label for="date">Date</label><input id="date" type="date" required></div>
+      <div class="span4"><label for="note">Note (optional)</label><input id="note" type="text" maxlength="160" placeholder="e.g. October tuition fee from family"></div>
+      <div class="span4 row"><button class="btn" type="submit" id="saveBtn">Add entry</button><button class="btn g" type="button" id="cancelEdit" hidden>Cancel edit</button></div>
+    </form>
+  </div>
+  <div class="card">
+    <div class="tools">
+      <input id="q" type="search" placeholder="Search notes or categories" aria-label="Search">
+      <select id="fType" aria-label="Type"><option value="">All types</option><option>Income</option><option>Expense</option></select>
+      <select id="fCat" aria-label="Category"><option value="">All categories</option></select>
+      <input id="fMonth" type="month" aria-label="Month">
+    </div>
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="lab" id="count"></span>
+      <span class="row"><button class="btn g s" id="csv">Export CSV</button><button class="btn d s" id="clear">Clear all</button></span></div>
+    <div class="tw"><table><thead><tr><th data-k="date">Date ↕</th><th data-k="type">Type</th><th data-k="category">Category</th><th data-k="note">Note</th><th data-k="amount" style="text-align:right">Amount ↕</th><th></th></tr></thead><tbody id="tbody"></tbody></table></div>
+  </div>
+</section>
+
+<!-- NOTES -->
+<section class="view" id="v-notes">
+  <h1>Notes</h1><p class="sub">Reminders, fee deadlines and money plans in one place.</p>
+  <div class="card">
+    <form class="f" id="nform">
+      <div class="span2"><label for="nt">Title</label><input id="nt" maxlength="60" placeholder="e.g. Semester fee due" required></div>
+      <div class="span2"><label>Colour</label><div class="sw" id="sw"></div></div>
+      <div class="span4"><label for="nb">Note</label><textarea id="nb" placeholder="Write details here"></textarea></div>
+      <div class="span4 row"><button class="btn" type="submit">Save note</button><input id="nq" type="search" placeholder="Search notes" style="max-width:240px;margin-left:auto" aria-label="Search notes"></div>
+    </form>
+  </div>
+  <div class="notes" id="notes"></div>
+</section>
+
+<p class="foot">© 2026 Student Pocket Manager. Your data stays in this browser.</p>
+</main>
+<div id="toast" role="status"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
