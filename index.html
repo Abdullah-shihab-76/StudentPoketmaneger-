@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Pocket Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="brand"><div class="logo">৳</div>Student Pocket Manager</div>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#transactions">Transactions</a>
+      <a href="#notes">Notes</a>
+      <a href="#admin">Admin</a>
+    </nav>
+    <button class="ib" id="theme">◐</button>
+  </div>
+</header>
+
+<main>
+
+<section class="view" id="dashboard">
+<h1>Your money, at a glance</h1>
+<p class="sub" id="monthLabel"></p>
+
+<div class="grid g4">
+  <div class="card hero"><div class="lab">Net balance</div><div class="num" id="sBal">৳0</div></div>
+  <div class="card"><div class="lab">Total income</div><div class="num inc" id="sInc">৳0</div></div>
+  <div class="card"><div class="lab">Total expense</div><div class="num exp" id="sExp">৳0</div></div>
+  <div class="card"><div class="lab">Savings rate</div><div class="num" id="sRate">0%</div></div>
+</div>
+
+<div class="grid g2 section-gap">
+<div class="card">
+<h3>Monthly budget <button class="btn g s" id="setBudget">Set budget</button></h3>
+<div class="row between"><span id="bTxt" class="lab"></span><b id="bPct"></b></div>
+<div class="prog"><i id="bBar"></i></div>
+<p id="bHint" class="lab"></p>
+</div>
+<div class="card">
+<h3>Savings goal <button class="btn g s" id="setGoal">Set goal</button></h3>
+<div class="row between"><span id="gTxt" class="lab"></span><b id="gPct"></b></div>
+<div class="prog"><i id="gBar"></i></div>
+<p id="gHint" class="lab"></p>
+</div>
+</div>
+
+<div class="grid g2 section-gap">
+<div class="card"><h3>Last 6 months</h3><div id="bars" class="bars"></div></div>
+<div class="card"><h3>Spending by category</h3><div id="cats"></div></div>
+</div>
+
+<div class="card section-gap">
+<h3>Recent activity</h3>
+<div class="tw"><table><tbody id="recent"></tbody></table></div>
+</div>
+</section>
+
+<section class="view" id="transactions">
+<h1>Transactions</h1>
+<p class="sub">Manage your income and expenses.</p>
+
+<div class="card section-gap">
+<h3 id="formTitle">Add transaction</h3>
+<form id="form" class="f">
+<div><label>Type</label>
+<select id="type"><option>Income</option><option>Expense</option></select></div>
+<div><label>Category</label><select id="category"></select></div>
+<div><label>Amount (৳)</label><input id="amount" type="number" min="1" required></div>
+<div><label>Date</label><input id="date" type="date" required></div>
+<div class="span4"><label>Note</label><input id="note" maxlength="160"></div>
+<div class="span4 row">
+<button class="btn">Add entry</button>
+<button class="btn g" type="button" id="cancelEdit" hidden>Cancel</button>
+</div>
+</form>
+</div>
+
+<div class="card">
+<div class="tools">
+<input id="q" type="search" placeholder="Search transactions">
+<select id="fType"><option value="">All types</option><option>Income</option><option>Expense</option></select>
+<select id="fCat"><option value="">All categories</option></select>
+<input id="fMonth" type="month">
+</div>
+<div class="row between">
+<span id="count" class="lab"></span>
+<div class="row">
+<button class="btn g s" id="csv">Export CSV</button>
+<button class="btn d s" id="clear">Clear all</button>
+</div>
+</div>
+<div class="tw"><table>
+<thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Note</th><th>Amount</th><th>Action</th></tr></thead>
+<tbody id="tbody"></tbody>
+</table></div>
+</div>
+</section>
+
+<section class="view" id="notes">
+<h1>Notes</h1>
+<p class="sub">Your personal reminders.</p>
+<div class="card">
+<form id="nform" class="f">
+<div class="span2"><label>Title</label><input id="nt" maxlength="60" required></div>
+<div class="span2"><label>Colour</label><div id="sw" class="sw"></div></div>
+<div class="span4"><label>Note</label><textarea id="nb"></textarea></div>
+<div class="span4 row"><button class="btn">Save note</button>
+<input id="nq" type="search" placeholder="Search notes"></div>
+</form>
+</div>
+<div id="notesList" class="notes"></div>
+</section>
+
+<!-- ADMIN PANEL -->
+<section class="view" id="admin">
+<h1>Admin Panel</h1>
+<p class="sub">Manage your Student Pocket Manager.</p>
+
+<div id="adminLogin" class="card login">
+<h3>Administrator Login</h3>
+<form id="loginForm">
+<label>Username</label>
+<input id="adminUser" required placeholder="Admin username">
+<label>Password</label>
+<input id="adminPass" type="password" required placeholder="Admin password">
+<button class="btn full">Login</button>
+<p id="loginError" class="exp"></p>
+</form>
+</div>
+
+<div id="adminDashboard" hidden>
+<div class="row between">
+<h2>Welcome, Admin</h2>
+<button class="btn d" id="logout">Logout</button>
+</div>
+
+<div class="grid g4 section-gap">
+<div class="card"><div class="lab">Transactions</div><div class="num" id="aCount">0</div></div>
+<div class="card"><div class="lab">Total Income</div><div class="num inc" id="aIncome">৳0</div></div>
+<div class="card"><div class="lab">Total Expense</div><div class="num exp" id="aExpense">৳0</div></div>
+<div class="card"><div class="lab">Notes</div><div class="num" id="aNotes">0</div></div>
+</div>
+
+<div class="card section-gap">
+<h3>Transaction Management</h3>
+<div class="tw"><table>
+<thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Amount</th><th>Action</th></tr></thead>
+<tbody id="adminTransactions"></tbody>
+</table></div>
+</div>
+
+<div class="card section-gap">
+<h3>Notes Management</h3>
+<div id="adminNotes"></div>
+</div>
+
+<div class="card section-gap">
+<h3>Application Settings</h3>
+<div class="row wrap">
+<button class="btn" id="adminBudget">Change Budget</button>
+<button class="btn" id="adminGoal">Change Savings Goal</button>
+<button class="btn g" id="backup">Download Backup</button>
+<label class="btn g upload">Restore Backup
+<input type="file" id="restore" accept=".json">
+</label>
+<button class="btn d" id="adminClear">Delete All Data</button>
+</div>
+</div>
+</div>
+</section>
+
+<footer class="foot">© 2026 Student Pocket Manager</footer>
+</main>
+
+<div id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
